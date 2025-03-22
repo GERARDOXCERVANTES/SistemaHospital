@@ -17,19 +17,7 @@ class iuInicio(ft.Container):
                 ]
             )
         )
-     # Creamos un contenedor vacío al que vamos a agregar contenido dinámicamente
-        self.container_click = containerClick() 
-        
-    def on_click_icon(self ,seccion):
-            if seccion == "cita":
-                self.container_click.content = iuCitas()
-                pass
-            if seccion == "grafica":
-                pass
-            else:
-                pass
-            ft.Page.update()  # Actualiza la página para mostrar el contenido nuevo	
-
+     
 # Clase para los datos médicos
 class datosM(ft.Card):
     def __init__(self):

@@ -6,7 +6,6 @@ class UiPaciente(ft.Container):
             expand=True,
             content=ft.Row(
                 controls=[
-                   
                     ft.Card(
                         expand=True,
                         height=1000,

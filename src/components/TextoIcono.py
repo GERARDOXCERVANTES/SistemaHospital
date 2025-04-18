@@ -6,6 +6,6 @@ class TextoIcono(ft.Row):
             spacing=10,  
             controls=[
                 ft.Icon(name=icono, size=24, color=IconC), 
-                ft.Text(texto, size=16, weight="bold",text_align= ft.TextAlign.CENTER)
+                ft.Text(texto, size=16, weight="bold",text_align= ft.TextAlign.CENTER,)
             ]
         )

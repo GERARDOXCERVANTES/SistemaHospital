@@ -1,5 +1,7 @@
 import flet as ft
 import datetime as dt
+from src.components.ActionButton import ActionButton
+from src.components.TextfieldsIcons import vitalField
 
 # Clase principal para la interfaz de citas
 class iuCitas(ft.Container):
@@ -8,7 +10,7 @@ class iuCitas(ft.Container):
             alignment= ft.alignment.center,
             expand=True,
             padding= 20,
-            content=date()  # Llamar al componente de DatePicker
+            content=date()  
                 
              
         )
@@ -28,6 +30,7 @@ def mesS():
         siguiente = dt.datetime(x.year, x.month + 1, 1)
     return siguiente
 
+
 # Clase para el DatePicker dentro de un Card
 class date(ft.Container):
     def __init__(self):  
@@ -41,15 +44,8 @@ class date(ft.Container):
                       ft.Column(
                           spacing= 20,
                           controls= [  
-                        ft.TextField(
-                            label= "HORA",
-                            hint_text= "ej 10:20 AM"
-                            ),
-                        ft.TextField(
-                            label="ID Paciente",
-                            width=200
-                            
-                            ),
+
+                            vitalField("ID Paciente",ft.icons.PERSON_OUTLINE,"",""),
                         
                           ]
                       ),ft.VerticalDivider(),
@@ -57,23 +53,11 @@ class date(ft.Container):
                           spacing= 20,
                           controls= [
                               #BOTON PARA ABRIR CALENDARIO
-                        ft.ElevatedButton(
-                            "SELECCIONAR FECHA",
-                            icon=ft.Icons.CALENDAR_MONTH,
-                            on_click=self.AbrirCalendario,
-                            color= ft.colors.WHITE,
-                            bgcolor= "#5E8E8D",
-                            height= 70,
-                            width= 180,
-                        ),
-                        ft.ElevatedButton(
-                            "AGENDAR CITA",
-                            icon= ft.Icons.ADD,
-                            width= 180,
-                            height= 70,
-                            bgcolor= "#5E8E8D",
-                            color= ft.Colors.WHITE
-                        )
+                        ActionButton("FECHA", ft.icons.CALENDAR_MONTH,self.AbrirCalendario),
+                        ActionButton("HORA", ft.icons.TIMELAPSE,self.abrirHorario),
+                        ActionButton("AGENDAR", ft.icons.ADD),
+
+
                         
                           ]
                       )
@@ -92,7 +76,34 @@ class date(ft.Container):
                 on_dismiss=self.handle_dismissal,
             )
         )
+        
+        
+        
+    def abrirHorario(self,e):
+     self.page.open(
+            ft.TimePicker(
+                confirm_text="Confirm",
+                error_invalid_text="Time out of range",
+                help_text="Pick your time slot",
+                on_change=self.handle_change,
+                on_dismiss=self.handle_dismissal,
+                on_entry_mode_change=self.handle_entry_mode_change,
+            )
+        )
+        
+        
+    def handle_change(self,e):
+        print(f"TimePicker change: ")
 
+    def handle_dismissal(self,e):
+        print(f"TimePicker dismissed: ")
+
+    def handle_entry_mode_change(self,e):
+        print(f"TimePicker Entry mode changed t")
+        
+        
+        
+        
     # Método para manejar el cambio de fecha
     def handle_date_change(self, e):
         # Mostrar la fecha seleccionada en un mensaje

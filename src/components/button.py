@@ -1,5 +1,5 @@
 import flet as ft
-class buttonP(ft.ElevatedButton):
+class buttonP(ft.ElevatedButton): 
     def __init__(self,text):
         
         super().__init__(

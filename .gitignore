@@ -10,3 +10,8 @@ storage/
 
 # Ignorar variables de entorno
 .env
+
+# Ignorar archivos de configuración
+config.py
+
+

@@ -10,6 +10,7 @@ class PacienteView(ft.Container):
         paciente_info = PacienteInfo()
         Condiciones_info = Condiciones()
         citas = CitasAgendadas()
+        sesiones = SesionesHemodialisis()
         super().__init__(
             expand=True,
             padding= 0,
@@ -27,7 +28,7 @@ class PacienteView(ft.Container):
                             ft.Divider(),
                             Condiciones_info,
                             ft.Divider(),
-                            SesionesHemodialisis(),
+                            sesiones,
                             
                             ]
                         )
@@ -39,7 +40,7 @@ class PacienteView(ft.Container):
                         content= ft.Column(
                             spacing= 20,
                             controls= [
-                                BuscadorPaciente(paciente_info,Condiciones_info,citas),
+                                BuscadorPaciente(paciente_info,Condiciones_info,citas,sesiones),
                                 ft.Divider(),
                                 citas,
                             ]

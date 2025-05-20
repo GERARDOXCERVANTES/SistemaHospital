@@ -3,12 +3,31 @@ from src.components.StatCard import StatCard
 from src.components.SectionHeader import SectionHeader
 from src.components.DataRow import DataRow
 from src.pages.inicio.components.Caledario import iuCitas
+from src.models.cita import Cita
 
 
-def create_medico_panel():
-        """Crea el panel de datos del médico"""
-        return ft.Container(
-            expand=True,
+class create_medico(ft.Container):
+    def __init__(self,medico):
+        agendar_cita = iuCitas(medico)
+        citas_pendientes = Cita.obtener_citas_pendientes(medico[0])
+        self.citas_medico = f"{citas_pendientes}"
+        self.id_medico = f"ID: {medico[0]}"
+        self.nombre_medico = f"NOMBRE: {medico[1]}"
+        self.especialidad_medico = f"ESPECIALIDAD: {medico[2]}"
+        self.email_medico = f"EMAIL: {medico[3]}"
+        
+        self.citas = StatCard(ft.icons.CALENDAR_TODAY, "CITAS HOY", self.citas_medico)
+
+        # Create components
+        self.foto_medico = ft.Icon(ft.icons.PERSON_4_OUTLINED, size=50, color="#4355B9")
+        # Create data rows
+        self.id_row = DataRow(ft.icons.BADGE_OUTLINED, self.id_medico)
+        self.nombre_row = DataRow(ft.icons.PERSON_OUTLINE, self.nombre_medico)
+        self.especialidad_row = DataRow(ft.icons.MEDICAL_SERVICES_OUTLINED, self.especialidad_medico)
+        self.email_row = DataRow(ft.icons.EMAIL_OUTLINED, self.email_medico)
+        
+        super().__init__(
+             expand=True,
             padding=20,
             border_radius=10,
             bgcolor=ft.colors.WHITE,
@@ -28,11 +47,7 @@ def create_medico_panel():
                                 width=100,
                                 border_radius=50,
                                 bgcolor="#E3F2FD",
-                                content=ft.Icon(
-                                    ft.icons.PERSON_4_OUTLINED,
-                                    size=50,
-                                    color="#4355B9"
-                                ),
+                                content= self.foto_medico,
                                 alignment=ft.alignment.center
                             ),
                             
@@ -43,10 +58,10 @@ def create_medico_panel():
                                     alignment=ft.MainAxisAlignment.START,
                                     spacing=10,
                                     controls=[
-                                        DataRow(ft.icons.BADGE_OUTLINED, 'ID: ---'),
-                                        DataRow(ft.icons.PERSON_OUTLINE, 'NOMBRE: ---'),
-                                        DataRow(ft.icons.MEDICAL_SERVICES_OUTLINED, 'ESPECIALIDAD: ---'),
-                                        DataRow(ft.icons.EMAIL_OUTLINED, 'EMAIL: ---')
+                                        self.id_row,
+                                        self.nombre_row,
+                                        self.especialidad_row,
+                                        self.email_row,
                                     ]
                                 )
                             ),
@@ -57,10 +72,10 @@ def create_medico_panel():
                             ft.Column(
                                 controls=[
                                     # Citas hoy
-                                    StatCard(ft.icons.CALENDAR_TODAY, "CITAS HOY", "20"),
+                                    self.citas,
                                     ft.Divider(height=1, color="#DFDFDF"),
-                                    # Pacientes
-                                    StatCard(ft.icons.PEOPLE_OUTLINE, "PACIENTES", "3")
+                                    
+                                    
                                 ]
                             ),
                             
@@ -76,11 +91,8 @@ def create_medico_panel():
                                     tabs=[
                                         ft.Tab(
                                             tab_content=ft.Icon(ft.icons.CALENDAR_MONTH),
-                                            content=iuCitas()
-                                        ),
-                                        ft.Tab(
-                                            tab_content=ft.Icon(ft.icons.DASHBOARD_CUSTOMIZE),
-                                        ),
+                                            content= agendar_cita
+                                        )
                                     ]
                                 )
                             )
@@ -89,3 +101,6 @@ def create_medico_panel():
                 ]
             )
         )
+        
+    
+        

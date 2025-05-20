@@ -67,9 +67,9 @@ class CitasAgendadas(ft.Container):
                     ]
                 )
             ]
+            
         else:
             self.filas.clear()
-            
             for cita in cita_data:
                 self.filas.append(
                     ft.DataRow(

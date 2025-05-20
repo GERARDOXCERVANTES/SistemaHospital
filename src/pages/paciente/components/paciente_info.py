@@ -26,7 +26,7 @@ class PacienteInfo(ft.Container):
                             ft.Divider(),
                         ]
                     ),
-                    ft.Row(
+                    ft.ResponsiveRow(
                         spacing=20,
                         controls=[
                             ft.Container(
@@ -41,10 +41,9 @@ class PacienteInfo(ft.Container):
                                 expand=True,
                                 height=150,
                                 padding=20,
-                                content=ft.Row(
+                                content=ft.ResponsiveRow(
                                     vertical_alignment=ft.CrossAxisAlignment.CENTER,
                                     alignment=ft.MainAxisAlignment.START,
-                                    spacing=60,
                                     controls=[
                                         # Ejemplo: Columna con "ID"
                                         ft.Column(
@@ -107,10 +106,8 @@ class PacienteInfo(ft.Container):
                 ]
             )
         )
-        
-    
-    def update_info(self,paciente_data):
-       
+
+    def update_info(self, paciente_data):
         if not paciente_data:
             self.label_id.value = "ID: ---"
             self.label_nombre.value = "NOMBRE: ---"
@@ -118,14 +115,23 @@ class PacienteInfo(ft.Container):
             self.label_sexo.value = "SEXO: ---"
             self.label_tipo_sangre.value = "TIPO DE SANGRE: ---"
         else:
-            
+            edad = self.obtener_edad(paciente_data[3])
             self.label_id.value = f"ID: {paciente_data[0]}"
             self.label_nombre.value = f"NOMBRE: {paciente_data[1]}"
-            self.label_edad.value = f"EDAD: {paciente_data[3]}"
+            self.label_edad.value = f"EDAD: {edad } AÑOS"
             self.label_sexo.value = f"SEXO: {paciente_data[2]}"
             self.label_tipo_sangre.value = f"TIPO DE SANGRE: {paciente_data[4]}"
 
         # Importante: forzar la actualización de este control
         self.update()
+        
+    def obtener_edad(self, fecha_nacimiento: dt.date) -> int:
+        hoy = dt.datetime.today().date()
+        
+        edad = hoy.year - fecha_nacimiento.year
 
-    
+        if (hoy.month, hoy.day) < (fecha_nacimiento.month, fecha_nacimiento.day):
+            edad -= 1
+
+        return edad 
+

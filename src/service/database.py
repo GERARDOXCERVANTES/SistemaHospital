@@ -44,3 +44,10 @@ class Database:
                 self.conn.close()
         except psycopg.OperationalError as e:
             print(f"Error al cerrar la conexión: {e}")
+            
+    def commit(self):
+        try:
+            if self.conn and not self.conn.closed:
+                self.conn.commit()
+        except psycopg.OperationalError as e:
+            print(f"Error al hacer commit: {e}")

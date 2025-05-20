@@ -1,40 +1,32 @@
 import flet as ft
-from src.pages.paciente.pacienteview import PacienteView
-from src.pages.sesiones.sesionesView import sesionV
-from src.pages.historial.historialView import historialClinico
+from src.pages.Registros.añadir_paciente import  AddPaciente
 from src.components.iconLogo import iconLogin
-from src.pages.inicio.inicioView import iuInicio
+from src.pages.Registros.agendar_cita import AgendarCita
+from src.pages.Registros.anadir_medico import AddMedico
+
 
 class Navegacion(ft.Container):
-    def __init__(self, on_menu_click, on_toggle_sidebar):
+    def __init__(self,on_menu_click,on_toggle_sidebar):
         self.expanded = True
         self.text_controls = []
         
-        # Create navigation items with both icon and text
         self.nav_items = [
             {
-                "icon": ft.icons.HOME,
-                "text": "INICIO",
-                "id": "dashboard"
+                "icon": ft.icons.PERSON_2_OUTLINED,
+                "text": "PACIENTE",
+                "id": "paciente"
             },
             {
-                "icon": ft.icons.PERSON_2,
-                "text": "PACIENTES",
-                "id": "pacientes"
+                "icon": ft.icons.MEDICAL_INFORMATION,
+                "text": "MEDICOS",
+                "id": "medico"
             },
             {
-                "icon": ft.icons.MEDICAL_INFORMATION_ROUNDED,
-                "text": "SESIONES",
-                "id": "sesiones"
-            },
-            {
-                "icon": ft.icons.PAGEVIEW,
-                "text": "HISTORIALES CLINICO",
-                "id": "historial"
+                "icon": ft.icons.DATE_RANGE,
+                "text": "CITAS",
+                "id": "cita"
             }
         ]
-        
-        # Create the navigation rows
         self.nav_rows = []
         
         for item in self.nav_items:
@@ -192,12 +184,11 @@ class containerP(ft.Container):
             margin=20,
             bgcolor="#D3D3D3",
             border_radius=50,
-            content=sesionV()
+            content= AddPaciente()
         )
+        
 
-
-
-def medico_view(page: ft.Page,medico):
+def recepcionista_View(page: ft.Page):
     page.title = "SISTEMA DE CONTROL DEL MEDICO"
     page.bgcolor = "#FAF8F7"
     page.padding = 0
@@ -207,14 +198,12 @@ def medico_view(page: ft.Page,medico):
     contenedorPrincipal = containerP()
 
     def on_menu_click(seccion_id: str):
-        if seccion_id == "dashboard":
-            contenedorPrincipal.content = iuInicio(medico)
-        elif seccion_id == "pacientes":
-            contenedorPrincipal.content = PacienteView()
-        elif seccion_id == "sesiones":
-            contenedorPrincipal.content = sesionV()
-        elif seccion_id == "historial":
-            contenedorPrincipal.content = historialClinico()
+        if seccion_id == "medico":
+            contenedorPrincipal.content = AddMedico()
+        elif seccion_id == "paciente":
+            contenedorPrincipal.content = AddPaciente()
+        elif seccion_id == "cita":
+            contenedorPrincipal.content =  AgendarCita()
         else:
             contenedorPrincipal.content = ft.Text(f"Sección: {seccion_id}", size=20)
         page.update()
@@ -229,4 +218,6 @@ def medico_view(page: ft.Page,medico):
         expand=True
     )
     return row
+
+
 

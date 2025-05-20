@@ -1,9 +1,11 @@
 import flet as ft
-from src.pages.inicio.components.citasPanel import create_citas_panel
-from src.pages.inicio.components.infoMedic import create_medico_panel
+from src.pages.inicio.components.citasPanel import CitasPanel
+from src.pages.inicio.components.infoMedic import create_medico
 
 class iuInicio(ft.Card):
-    def __init__(self):
+    def __init__(self,medico):
+        panel_medico = create_medico(medico)
+        panel_citas = CitasPanel(medico)
         super().__init__(
             color=ft.colors.WHITE,
             elevation=5,
@@ -14,9 +16,10 @@ class iuInicio(ft.Card):
                 content=ft.Column(
                     spacing=20,
                     controls=[
-                        create_medico_panel(),
-                        create_citas_panel()
+                        panel_medico,
+                        panel_citas
                     ]
                 )
             )
         )
+        

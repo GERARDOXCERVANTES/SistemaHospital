@@ -6,8 +6,13 @@ from src.models.medico import Medico
 from src.pages.paciente.components.paciente_info import PacienteInfo
 from src.pages.paciente.components.condiconies import Condiciones
 from src.pages.paciente.components.citasA import CitasAgendadas
+from src.pages.paciente.components.sesiones_hemodialisis import SesionesHemodialisis
+
+
+
 class BuscadorPaciente(ft.Container):
-    def __init__(self, paciente_info: PacienteInfo,condiciones_info : Condiciones,citas : CitasAgendadas):
+    def __init__(self, paciente_info: PacienteInfo,condiciones_info : Condiciones,citas : CitasAgendadas, sesiones: SesionesHemodialisis):
+        self.sesiones = sesiones
         self.citas = citas
         self.paciente_info = paciente_info  
         self.condiciones_info = condiciones_info
@@ -61,11 +66,13 @@ class BuscadorPaciente(ft.Container):
         lista_alergias = Medico.buscar_alergias(paciente_id)
         lista_condiciones = Medico.buscar_condiciones(paciente_id)
         citas_pacientes = Medico.buscar_citas(paciente_id)
+        sesiones_paciente =Medico.buscar_sesiones(paciente_id)
         
         self.citas.update_citas(citas_pacientes)
         self.paciente_info.update_info(paciente_data)
         self.condiciones_info.update_alergias(lista_alergias)
         self.condiciones_info.update_condiciones(lista_condiciones)
+        self.sesiones.update_sesiones(sesiones_paciente)
         # Limpiamos el campo
         self.campo.value = ""
         
